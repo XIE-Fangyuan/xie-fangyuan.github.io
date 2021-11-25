@@ -4,5 +4,16 @@ icon: fas fa-info-circle
 order: 4
 ---
 
+Hi there! This is Fangyuan Xie.
 
-> **Note**: Add Markdown syntax content to file `_tabs/about.md` and it will show up on this page.
+## Meet Me
+
+A boy studying at South China University of Technology.
+
+Major in computer vision and deep learning.
+
+Interested in C++, Java, Python and Swift.
+
+## What Have I Done
+
+Well, nothing yet.😝
