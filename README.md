@@ -10,4 +10,4 @@
 
 Hi there!👋
 
-Welcome to visit [Xie Fangyuan](https://xie-fangyuan.github.io)'s GitHub Pages.
+Welcome to visit [Fangyuan Xie](https://xie-fangyuan.github.io)'s GitHub Pages.
