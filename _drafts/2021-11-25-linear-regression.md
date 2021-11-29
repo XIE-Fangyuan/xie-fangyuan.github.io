@@ -24,7 +24,7 @@ $$
 \boldsymbol{{x}^{(i)}} = \begin{pmatrix}
     x_{1}^{(i)} \\
     x_{2}^{(i)} \\
-    \vdots \\
+    \vdots      \\
     x_{n}^{(i)}
  \end{pmatrix}
 $$

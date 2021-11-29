@@ -11,3 +11,5 @@
 Hi there!👋
 
 Welcome to visit [Fangyuan Xie](https://xie-fangyuan.github.io)'s GitHub Pages.
+
+Powered by [Jekyll](https://jekyllrb.com/) with [Chirpy](https://github.com/cotes2020/jekyll-theme-chirpy) theme.
