@@ -20,7 +20,7 @@ A boy studying at South China University of Technology.
 
 Major in computer vision and deep learning.
 
-Interested in C++, Java, Python and Swift.
+Interested in C++, Java☕️, Python🐍 and Swift.
 
 ## What Have I Done
 

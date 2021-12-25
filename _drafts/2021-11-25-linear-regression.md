@@ -4,9 +4,9 @@ date: 2021-11-25 00:41:51 +0800
 categories: [人工智能, 机器学习]
 tags: [人工智能, 机器学习, 线性回归]
 toc: true
-comments: false
+comments: true
 math: true
-pin: true
+pin: false
 render_with_liquid: false
 ---
 
