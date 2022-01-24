@@ -1,0 +1,130 @@
+---
+title: LaTex
+date: 
+categories: [工具]
+tags: [mocOS, LaTeX, MiKTeX, VS Code]
+toc: true
+comments: true
+math: true
+pin: false
+render_with_liquid: false
+---
+
+## 配置环境
+
+### 安装MiKTeX
+
+从[MiKTeX官网](https://miktex.org/download)下载MiKTeX
+
+打开MiKTeX，检检查更新，为**个人**安装宏包
+
+> 不要使用为系统安装，因为每次打开MiKTeX都是默认以个人的方式打开，同时可以避免无法下载一些宏包的问题。
+
+将MiKTeX -> 设置 -> 常规 -> 宏包安装 -> 自动（即时）安装缺失的宏包设置为`总是`
+
+将`~/bin`添加到终端的环境变量`PATH`中，运行`echo export 'PATH=~/bin:$PATH' >> ~/.zshrc`
+
+> 个人目录下的`.zshrc`是zsh的配置文件。如果使用bash，bash的配置文件是`~/.bash_profile`
+
+将`~/bin`添加到图形界面应用的环境变量`PATH`中，运行`sudo launchctl config user path "$HOME/bin:$PATH"`
+
+### 配置VS Code
+
+在VS Code中安装LaTeX Workshop插件
+
+将VS Code -> Settings -> Extensions -> LaTeX -> Latex-workshop -> Latex -> Auto Build: Run设置为`onFileChange`
+
+将VS Code -> Settings -> Text Editor -> Editor: Word Wrap设置为`on`
+
+### 在$\LaTeX$文档中使用中文
+
+在VS Code中，打开所有命令：<kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>P</kbd>
+
+搜索`settings`，点击`Preferences: Open Settings (JSON)`
+
+在`settings.json`的字典最后添加latex的工具和recipes，添加后的`settings.json`内容如下：
+
+```json
+{
+    ...
+    // 上面是已有的内容，注意可能需要在上面的最后一项后添加一个英文逗号
+
+    "latex-workshop.latex.tools": [
+        {
+            "name": "latexmk",
+            "command": "latexmk",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "-pdf",
+                "%DOC%"
+            ]
+        },
+        {
+            "name": "xelatex",
+            "command": "xelatex",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "%DOC%"
+            ]
+        },
+        {
+            "name": "pdflatex",
+            "command": "pdflatex",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "%DOC%"
+            ]
+        },
+        {
+            "name": "bibtex",
+            "command": "bibtex",
+            "args": [
+                "%DOCFILE%"
+            ]
+        }
+    ],
+    "latex-workshop.latex.recipes": [
+        //支持中英文（Unicode）编译
+        {
+            "name": "Unicode",
+            "tools": [
+                "xelatex",
+                "bibtex",
+                "xelatex",
+            ]
+        },
+        //支持英文（ASCII）编译
+        {
+            "name": "ASCII",
+            "tools": [
+                "bibtex",
+                "pdflatex",
+            ]
+        }
+    ],
+}
+```
+{: file="settings.json" }
+
+
+解决类似`ctex/fontset/ctex-fontset-macnew.def:99: Package fontspec Error: The font "Kaiti SC " cannot be found.`的错误：对于macOS 12.1，`Kaiti.ttc`存放在`/System/Library/AssetsV2/com_apple_MobileAsset_Font7`，于是在`~/Library/Application Support/MiKTeX/texmfs/config/fontconfig/config/localfonts2.conf`中添加该目录，添加后：
+
+```xml
+<?xml version="1.0"?>
+<fontconfig>
+<dir>/System/Library/AssetsV2/com_apple_MobileAsset_Font7</dir>
+</fontconfig>
+```
+{: file-"~/Library/Application Support/MiKTeX/texmfs/config/fontconfig/config/localfonts2.conf"}
+
+待解决类似`Package fontspec Warning: Font "STFangsong" does not contain requested Script "CJK".`的警告：
+
+在`.tex`文件中，将文档的类型设置为`ctexart`，`ctexrep`，`ctexbook`或`ctexbeamer`，如：`\documentclass{ctexart}`
+
+## $\LaTeX$基础

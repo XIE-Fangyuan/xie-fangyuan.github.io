@@ -1,0 +1,401 @@
+---
+title: Git
+date: 
+categories: [工具]
+tags: [macOS, Git]
+toc: true
+comments: true
+math: true
+pin: false
+render_with_liquid: false
+---
+
+## Git简介
+
+版本控制系统（version control system，VCS）分类：本地（RCS），集中化（CVS），分布式（Git）。
+
+Git由Linux开发，记录快照而非差异比较，近乎所有操作都在本地执行，使用SHA-1散列计算校验和以保证完整性，一般只添加数据。
+
+使用Git时，文件的3个分区：
+
+1. 工作区（working directory）：对项目的某个版本独立提取出来的内容。
+2. 暂存区（staging area）：一个文件，保存了下次将要提交的文件列表信息，一般在仓库中。
+3. 仓库（repository，`.git` directory）： Git保存项目的元数据和对象数据库的地方。
+
+使用Git时，已跟踪文件的3种状态：
+
+1. 已修改（modified）：修改了文件，但还没保存到数据库中。
+2. 已暂存（staged，cached）：对一个已修改文件的当前版本做了标记，使之包含在下次提交的快照中。
+3. 已提交（committed）：数据已经安全地保存在本地数据库中。
+
+macOS安装Git：
+
+```shell
+brew install git
+```
+
+`git config`管理Git的配置，Git的配置存储在3个文件中：
+
+1. `/usr/local/etc/gitconfig`：系统上所有用户的所有仓库的配置，`--system`。
+2. `~/.gitconfig`：当前用户的所有仓库的配置，`--global`。
+3. `./.git/config`：当前仓库的配置，`--local`，默认的选项。
+
+> 每个级别的配置会覆盖上一个级别的配置。
+
+在使用Git之前，最好设置用户名和邮箱：
+
+```shell
+git config --global user.name 'Xie Fangyuan Air'
+git config --global user.email 'xie.fangyuan@foxmail.com'
+```
+
+可以设置VS Code为默认文本编辑器：
+
+> 如果还没有将VS Code添加到环境变量，先在VS Code中按<kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>P</kbd>打开所有命令，搜索并执行`install 'code' command in PATH`。
+
+```shell
+git config --global core.editor 'code -w'
+```
+
+> 此处`-w`等同于`--wait`，等待文件关闭后再返回。
+
+## Git基础
+
+### 配置
+
+查看所有的配置以及它们所在的文件：
+
+```shell
+git config -l --show-origin
+```
+
+> 此处`-l`等同于`--list`。
+
+查看某一个配置：
+
+```shell
+git config user.email
+```
+
+删除配置项：
+
+```shell
+git config --unset user.name
+```
+
+修改配置项：
+
+```shell
+git --replace-all user.name 'Xie Fangyuan Air'
+```
+
+### 帮助
+
+获取帮助手册有3种方式：
+
+```shell
+git help config
+git config --help
+man git-config
+```
+
+获取简短的帮助，`git <verb> -h`，如：
+
+```shell
+git config -h
+```
+
+### 初始化
+
+在未进行版本控制的本地项目目录中初始化仓库：
+
+```shell
+git init
+```
+
+### 克隆
+
+克隆现有的仓库：
+
+```shell
+git clone https://gitee.com/mirrors/oh-my-zsh.git
+```
+
+克隆现有仓库并指定新的名称：
+
+```shell
+git clone https://gitee.com/mirrors/oh-my-zsh.git oh_my_zsh
+```
+
+### 状态
+
+检查有变动文件的状态：
+
+```shell
+git status
+```
+
+查看紧凑的文件状态：
+
+```shell
+git status -s
+```
+
+> 此处`-s`等同于`--short`。新添加的未跟踪文件前面有`??`标记，新添加到暂存区中的文件前面有`A`标记，修改过的文件前面有`M`标记。每个文件的标记有两栏，左栏指明了暂存区的状态，右栏指明了工作区的状态。
+
+查看详细的文件状态：
+
+```shell
+git status -v
+```
+
+> 此处`-v`等同于`--verbose`。
+
+### 忽略文件
+
+最好在新建仓库时创建`.gitignore`文件，列出要忽略的文件的模式：
+
+1. 以`#`开头的行会被忽略。
+2. 使用标准的glob模式匹配，会递归地应用在整个工作区。`*`匹配零个或多个任意字符，`[abc]`匹配方括号中的任一字符，`?`只匹配一个任意字符，`[0-9]`匹配任一0到9的数字，`**`匹配任意中间目录。
+3. 以`/`开头防止递归。
+4. 以`/`结尾指定目录。
+5. 在模式前加上`!`强制保留文件。
+
+> 主流编程语言的[`.gitignore`文件参考](https://github.com/github/gitignore)。
+
+### 添加
+
+将一个新增或修改后的文件添加到暂存区：
+
+```shell
+git add main.py
+```
+
+将当前目录下所有新增或修改后的文件添加到暂存区：
+
+```shell
+git add .
+```
+
+将项目目录下所有新增或修改后的文件添加到暂存区：
+
+```shell
+git add -A
+```
+
+### 比较
+
+> 此处`-A`等同于`--all`。
+
+比较工作区和暂存区的差异：
+
+```shell
+git diff
+```
+
+比较暂存区与仓库最后一次提交的差异：
+
+```shell
+git diff --staged
+```
+
+> 此处`--staged`等同于`--cached`。
+
+### 提交
+
+将暂存区的快照提交到仓库：
+
+```shell
+git commit
+```
+
+提交时指定提交信息：
+
+```shell
+git commit -m 'update README.md'
+```
+
+> 此处`-m`等同于`--message`。
+
+添加所有修改过的已跟踪文件到暂存区并提交：
+
+```shell
+git commit -a
+```
+
+> 此处`-a`等同于`--all`。
+
+### 删除
+
+从仓库和工作区删除文件并将修改添加到暂存区，文件名可以使用glob模式匹配：
+
+```shell
+git rm draft.py
+```
+
+从仓库删除文件，但保留工作区的文件，并将修改添加到暂存区：
+
+```shell
+git rm draft.py --cached
+```
+
+> 此处`--cached`**不**等同于`--staged`。
+
+删除已修改或已暂存（即已跟踪但未提交）的文件：
+
+```shell
+git rm -f draft.py
+```
+
+> 此处`-f`等同于`--force`，用于防止误删尚未提交到仓库的数据。
+
+### 移动
+
+移动文件并将修改暂存：
+
+```shell
+git mv README.md README
+```
+
+> 等价于`mv README.md README && git rm README.md && git add README`。
+
+### 历史
+
+查看提交历史：
+
+```shell
+git log
+```
+
+> `-3`显示最新3条提交历史，`-p`等同于`--patch`显示差异，`--stat`显示差异统计信息，`--shortstat`显示简短的差异统计信息，`--name-only`显示差异文件信息列表，`--name-status`显示差异文件名列表，`--graph`显示分支信息，`--abbrev-commit`显示简短的校验和，`--relative-date`显示相对与当前的提交时间，`--oneline`将每次提交显示为一行；`--since`等同于`--after`显示指定时间之后的提交，`--until`等同于`--before`显示指定时间之前的提交，`--author`显示作者匹配指定字符串的提交，`--committer`显示提交者匹配指定字符串的提交，`--grep`显示提交说明中包含指定字符串的提交，`-S`显示添加或删除内容匹配指定字符串的提交；一个选项可以指定多个模式，匹配任意一个模式，`--all-match`匹配所有模式；`--no-merges`不显示合并提交。
+
+### 撤销
+
+修改上一次提交的信息，或修改内容后替换上一次提交：
+
+```shell
+git commit --amend
+```
+
+当意外地将不需要暂存的文件暂存后，取消暂存的文件：
+
+```shell
+git reset HEAD CONTRIBUTING.md
+```
+
+### 远程仓库
+
+#### GPG
+
+1. 查看是否存在`gpg`密钥
+
+    ```sh
+    gpg --list-secret-keys --keyid-format LONG
+    ```
+
+2. 创建`gpg`密钥
+
+    下载[gpg命令行工具](https://www.gnupg.org/download/)，或者`brew install gpg`
+
+    生成密钥
+
+    ```sh
+    gpg --full-generate-key
+    ```
+
+3. 将密钥添加到GitHub
+
+    查看密钥ID
+
+    ```sh
+    gpg --list-secret-keys --keyid-format LONG
+    ```
+
+    查看密钥
+
+    ```sh
+    gpg --armor --export [ID]
+    ```
+
+    从`-----BEGIN PGP PUBLIC KEY BLOCK-----`一直复制到`-----END PGP PUBLIC KEY BLOCK-----`
+    在GitHub的Settings -> SSH and GPG keys -> New GPG key中粘贴。
+  
+4. 使用`gpg`签名提交
+
+    添加配置，要求使用签名提交
+
+    ```git
+    git config --global commit.gpgsign true
+    git config --global user.signingkey [ID]
+    ```
+
+### Token
+
+Setting -> Developer settings -> Personal access token -> Generate new token -> copy
+
+## 基础
+
+```shell
+git 
+```
+
+1. 拉取本地仓库没有的信息，不合并：`git fetch origin`，`git fetch`
+2. 拉取仓库并合并：`git pull origin`，`git pull`
+3. 显示远程仓库：`git remote`，`git remote -v`
+4. 添加远程仓库：`git remote add origin https://gitee.com/xie-fangyuan/xie-fangyuan.git`
+5. 提交到远程的空仓库：`git push -u origin master`
+6. 推送仓库：`git push`
+7. 跟踪新文件：`git add *`
+8. 更新跟踪的文件：`git add -u`
+9. 列出文件：`git ls-files`
+
+## 别名
+
+```shell
+# git config --global pager.log false
+# git config --global pager.config false
+# git config --global pager.branch false
+# git config --global pager.diff false
+git config --global alias.s status
+git config --global alias.a '!git add . && git status'
+git config --global alias.au '!git add -u . && git status'
+git config --global alias.aa '!git add . && git add -u . && git status'
+git config --global alias.c commit
+git config --global alias.cm 'commit -m'
+git config --global alias.ca 'commit --amend'
+git config --global alias.ac '!git add . && git commit'
+git config --global alias.acm '!git add . && git commit -m'
+git config --global alias.l "log --graph --all --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(white)- %an, %ar%Creset'"
+git config --global alias.ll 'log --stat --abbrev-commit --graph'
+git config --global alias.ll1 'log --stat --abbrev-commit --graph -1'
+git config --global alias.lg "log --color --graph --pretty=format:'%C(bold white)%h%Creset -%C(bold green)%d%Creset %s %C(bold green)(%cr)%Creset %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative"
+git config --global alias.lg5 "log --color --graph --pretty=format:'%C(bold white)%h%Creset -%C(bold green)%d%Creset %s %C(bold green)(%cr)%Creset %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative -5"
+git config --global alias.llg "log --color --graph --pretty=format:'%C(bold white)%H %d%Creset%n%s%n%+b%C(bold blue)%an <%ae>%Creset %C(bold green)%cr (%ci)' --abbrev-commit"
+git config --global alias.d diff
+git config --global alias.master 'checkout master'
+git config --global alias.spull 'svn rebase'
+git config --global alias.spush 'svn dcommit'
+git config --global alias.alias '!git config --list | grep "alias\." | sed "s/alias\.\([^=]*\)=\(.*\)/\1\     => \2/" | sort'
+```
+
+## 修改commit
+
+1. 显示最后3条commit：`git rebase -i HEAD~3`
+2. 进入编辑模式：`i`
+3. 将需要修改的commit之前的`pick`改为`edit`
+4. 保存退出：<kbd>esc</kbd>，`:wq`
+5. 开始修改：`git commit --amend '-S'`
+6. 进入编辑模式：`i`
+7. 修改内容后保存退出：<kbd>esc</kbd>，`:wq`
+8. 如果有多条commit要修改，继续第5步
+9. 保存修改：`git rebase --continue`
+10. 强制覆盖远程仓库：`git push --force`
+
+## 分支
+
+1. 创建分支：`git branch dev`
+2. 切换分支：`git checkout dev`
+3. 创建并切换分支：`git checkout -b dev`
+4. 合并分支到当前分支：`git merge dev`
+5. 删除分支：`git branch -d dev`
+6. 当两个分支对同一个文件进行修改后，合并时会出现冲突，手动解决冲突后再提交
