@@ -13,7 +13,7 @@ order: 4
                                     /____//____/                    
 ```
 
-Hi there! This is XIE Fangyuan.
+👋 Hi there! This is 谢方圆 (XIE Fangyuan).
 
 ## Meet Me
 
@@ -21,7 +21,7 @@ A boy studying at South China University of Technology.
 
 Major in computer vision and deep learning.
 
-Interested in C++, Java☕️, Python🐍 and Swift.
+Interested in Python🐍, C++, Swift and Java☕️.
 
 ## What Have I Done
 

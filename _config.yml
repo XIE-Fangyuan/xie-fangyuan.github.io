@@ -28,10 +28,10 @@ description: >-                        # used by seo meta and the atom feed
   and focuses on text presentation.
 
 # fill in the protocol & hostname for your site, e.g., 'https://username.github.io'
-url: 'https://xie-fangyuan.gihub.io'
+url: 'https://XIE-Fangyuan.gihub.io'
 
 github:
-  username: Xie-Fangyuan             # change to your github username
+  username: XIE-Fangyuan             # change to your github username
 
 # twitter:
 #  username: twitter_username            # change to your twitter username
@@ -43,7 +43,7 @@ social:
   email: xie.fangyuan@foxmail.com             # change to your email address
   links:
     # The first element serves as the copyright owner's link
-    - https://github.com/xie-fangyuan
+    - https://github.com/XIE-Fangyuan
     # - https://twitter.com/username
     # - https://www.facebook.com/username
     # - https://www.linkedin.com/in/username
@@ -78,7 +78,7 @@ theme_mode:   # [light|dark]
 # will be added to all image (site avatar & posts' images) paths starting with '/'
 #
 # e.g. 'https://cdn.com'
-img_cdn: 'https://github.com/Xie-Fangyuan/xie-fangyuan.github.io/blob/main'
+img_cdn: 'https://github.com/XIE-Fangyuan/xie-fangyuan.github.io/blob/main'
 
 # the avatar on sidebar, support local or CORS resources
 avatar: '/assets/img/favicons/favicon.jpg?raw=true'
