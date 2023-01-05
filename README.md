@@ -1,4 +1,4 @@
-# XIE Fangyuan's GitHub Pages
+# XIÈ Fāng-yuán's GitHub Pages
 
 ```text
    _  __ __________   ______                                        
@@ -11,6 +11,6 @@
 
 Hi there!👋
 
-Welcome to visit [谢方圆 (XIE Fangyuan)](https://XIE-Fangyuan.github.io)'s GitHub Pages.
+Welcome to visit [谢方圆 (XIÈ Fāng-yuán)](https://XIE-Fangyuan.github.io)'s GitHub Pages.
 
 Powered by [Jekyll](https://jekyllrb.com/) with [Chirpy](https://github.com/cotes2020/jekyll-theme-chirpy) theme.

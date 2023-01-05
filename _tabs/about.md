@@ -13,7 +13,7 @@ order: 4
                                     /____//____/                    
 ```
 
-👋 Hi there! This is 谢方圆 (XIE Fangyuan).
+👋 Hi there! This is 谢方圆 (XIÈ Fāng-yuán).
 
 ## Meet Me
 
